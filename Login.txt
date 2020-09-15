@@ -1,0 +1,74 @@
+# Login-Signup
+
+import os
+import numpy as np
+import colorama as cr
+os.system("clear")
+
+cr.init(autoreset=True)
+
+
+money_value = 1 == 100
+users = {}
+
+filenames = os.listdir()
+del filenames[:3]
+del filenames[1:]
+filenames_test =  (str(w) for w in filenames)
+users_files = (''.join(filenames_test))
+#BANNER
+print(*20*('-',), sep='_')
+print("\n           OFFICIAL BANK \n")
+print(*20*('-',),sep='_')
+print("\n")
+print(f"\t\t\t {cr.Back.RED}  Entry  ")
+print("\n")
+
+
+def start():
+
+   def login():  
+    create_new = input("\n Signup or Login: ").lower()
+    if create_new == "login": 
+      user_input = input("\n Login: ")
+      password_input = input("\n Password: ")
+      load_file = np.load(users_files ,allow_pickle=True)
+      u_p = "{'" + user_input + "': '" + password_input + "'}"
+      res = str(load_file)
+      if u_p == res:
+        print("\t\n Login Success ")
+        print("\n")
+        user_input = user_input.title()
+        print(f"\t {cr.Back.RED} Welcome " + user_input + " ,What do you want to do today?")
+        def login_activated():
+           print("\t\t\n Create file?[ ] ")
+           print("\t\t\n Check ")   
+      else:
+          pfailure =input("\t\n Authentication Failure. Retry? [y/n]: ")
+          if pfailure == "y":
+            login()
+          else:
+              print("Goodbye.")
+
+    elif create_new == "signup":
+     user1 = input("\n New User: ")
+     if user1 in users:
+       print("\t\n Username Already in Use:")
+       login()  
+  
+     else:
+       password1 = input("\n New Password: ")
+       if password1 in users:
+         print("\t\n Password Already in Use: ")
+       else:
+         users[user1] = password1
+         print("\t\n Signup Success! ")
+         np.save(user1, users)
+         login()
+    
+    else:
+      print("\t\n Invalid Input! ")
+      login()
+   
+   login()
+start()
